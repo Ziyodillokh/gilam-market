@@ -98,6 +98,7 @@ export default function HomePage({ product, search }: { product: any, search?: a
             alt="Gilam Market"
             title="Gilam Market"
             priority={true}
+            unoptimized
           />
         </Link>
         <h3 className="text-[17px] leading-[20px] text-[#212121] mt-5 mb-[7px] font-semibold">
