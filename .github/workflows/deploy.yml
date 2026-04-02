@@ -1,0 +1,35 @@
+name: Deploy Test Gilam Market Store
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --legacy-peer-deps
+      - run: npm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to test server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/grm/gilam-market
+            git stash
+            git pull origin main
+            npm install --legacy-peer-deps
+            npm run build
+            pm2 restart gilam-market || pm2 start npm --name gilam-market --cwd /home/grm/gilam-market -- start -- -p 3200
+            echo "✅ Gilam Market store deployed!"
