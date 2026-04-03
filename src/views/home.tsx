@@ -120,7 +120,7 @@ export default function HomePage({ product, search }: { product: any, search?: a
             key={e?.id}
             className="colm1"
             url={`/glam/${e?.id}?modelId=${e?.model?.title}&color=${e?.color?.title}&collectionId=${e?.collection?.title}`}
-            title={`${e?.collection?.title} ${e?.model?.title}`}
+            title={`${e?.internetTitle || e?.collection?.title} ${e?.model?.title}`}
             type={e?.sizeType}
             text={e?.size?.title}
             image={e?.imgUrl?.path ? minio_img_url + e?.imgUrl?.path : ""}

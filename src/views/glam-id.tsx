@@ -64,7 +64,7 @@ export default function GlamById({ product, productArr, id }) {
         </div>
         <div className="flex flex-col-reverse lg:flex-row w-full gap-4 max-w-full lg:max-w-[620px]">
           {/* Thumbnails: main image + video + other images */}
-          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto lg:max-h-[740px] w-full lg:w-[81px] pb-2 lg:pb-0 no-scrollbar">
+          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-hidden w-full lg:w-[81px] pb-2 lg:pb-0 no-scrollbar">
             {/* Main image thumbnail */}
             {oneProduct?.imgUrl?.path && (
               <div
@@ -127,7 +127,7 @@ export default function GlamById({ product, productArr, id }) {
           </h4>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-5 gap-2">
             <h4 className="text-[28px] lg:text-[40px] leading-[34px] lg:leading-[50px] font-semibold text-[#282A2C]">
-              {oneProduct?.collection?.title}
+              {oneProduct?.internetTitle || oneProduct?.collection?.title}
             </h4>
             <p className="text-[20px] lg:text-[24px] leading-[24px] lg:leading-[26px] font-medium text-[#212121]">
               {Number(oneProduct?.i_price).toLocaleString()} sum
