@@ -17,11 +17,16 @@ export default function GlamById({ product, productArr, id }) {
   const [LocalId, setLocalId] = useState(id);
   const [type, setType] = useState(1);
   const [oneProduct, setOneProduct] = useState<any>();
+  const [activeMedia, setActiveMedia] = useState<{ type: 'image' | 'video'; src: string } | null>(null);
   const { buskets } = useAppSelector((store) => store.buskets);
   const { likes } = useAppSelector((store) => store.likes);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    setOneProduct(product?.find((e) => e?.id == LocalId));
+    const p = product?.find((e: any) => e?.id == LocalId);
+    setOneProduct(p);
+    if (p?.imgUrl?.path) {
+      setActiveMedia({ type: 'image', src: minio_img_url + p.imgUrl.path });
+    }
   }, [product, LocalId]);
 
   const HendleLike = (e) => {
@@ -58,35 +63,61 @@ export default function GlamById({ product, productArr, id }) {
           <Back />
         </div>
         <div className="flex flex-col-reverse lg:flex-row w-full gap-4 max-w-full lg:max-w-[620px]">
-          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible w-full lg:w-[81px] pb-2 lg:pb-0 no-scrollbar">
-            <Image
-              src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
-              width={81}
-              height={"100"}
-              className="flex shrink-0 items-center object-contain  justify-center  w-[81px]  overflow-hidden rounded-md"
-              alt={oneProduct?.model?.title || "Product thumbnail"}
-            />
+          {/* Thumbnails: main image + video + other images */}
+          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto lg:max-h-[740px] w-full lg:w-[81px] pb-2 lg:pb-0 no-scrollbar">
+            {/* Main image thumbnail */}
+            {oneProduct?.imgUrl?.path && (
+              <div
+                onClick={() => setActiveMedia({ type: 'image', src: minio_img_url + oneProduct.imgUrl.path })}
+                className={`shrink-0 w-[81px] h-[81px] rounded-md overflow-hidden cursor-pointer border-2 ${activeMedia?.src === minio_img_url + oneProduct.imgUrl.path ? 'border-black' : 'border-transparent'}`}
+              >
+                <Image src={minio_img_url + oneProduct.imgUrl.path} width={81} height={81} className="w-full h-full object-cover" alt="Main" />
+              </div>
+            )}
+            {/* Video thumbnail */}
+            {oneProduct?.videoUrl?.path && (
+              <div
+                onClick={() => setActiveMedia({ type: 'video', src: minio_img_url + oneProduct.videoUrl.path })}
+                className={`shrink-0 w-[81px] h-[81px] rounded-md overflow-hidden cursor-pointer border-2 relative ${activeMedia?.src === minio_img_url + oneProduct.videoUrl.path ? 'border-black' : 'border-transparent'}`}
+              >
+                <video src={minio_img_url + oneProduct.videoUrl.path} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21" /></svg>
+                </div>
+              </div>
+            )}
+            {/* Other images thumbnails */}
+            {oneProduct?.otherImgs?.map((imgPath: string, i: number) => (
+              <div
+                key={i}
+                onClick={() => setActiveMedia({ type: 'image', src: minio_img_url + imgPath })}
+                className={`shrink-0 w-[81px] h-[81px] rounded-md overflow-hidden cursor-pointer border-2 ${activeMedia?.src === minio_img_url + imgPath ? 'border-black' : 'border-transparent'}`}
+              >
+                <Image src={minio_img_url + imgPath} width={81} height={81} className="w-full h-full object-cover" alt={`Extra ${i + 1}`} />
+              </div>
+            ))}
+            {oneProduct?.other_images?.map((img: any, i: number) => (
+              <div
+                key={`oi-${i}`}
+                onClick={() => setActiveMedia({ type: 'image', src: minio_img_url + img.path })}
+                className={`shrink-0 w-[81px] h-[81px] rounded-md overflow-hidden cursor-pointer border-2 ${activeMedia?.src === minio_img_url + img.path ? 'border-black' : 'border-transparent'}`}
+              >
+                <Image src={minio_img_url + img.path} width={81} height={81} className="w-full h-full object-cover" alt={`Extra ${i + 1}`} />
+              </div>
+            ))}
           </div>
-          {oneProduct?.imgUrl ? (
+          {/* Main preview */}
+          {activeMedia ? (
             <div className="relative w-full flex items-center justify-center aspect-[6/4] lg:aspect-[4/4] lg:max-h-[740px] rounded-lg overflow-hidden bg-[#fcfcfc]">
-              <AntImage
-                src={oneProduct?.imgUrl?.path ? minio_img_url + oneProduct?.imgUrl?.path : ""}
-                width={500}
-                height={"100%"}
-                className="object-contain w-full h-full"
-                alt={oneProduct?.model?.title || "Product main image"}
-              />
+              {activeMedia.type === 'video' ? (
+                <video src={activeMedia.src} controls autoPlay playsInline className="w-full h-full object-contain" />
+              ) : (
+                <AntImage src={activeMedia.src} width={500} height={"100%"} className="object-contain w-full h-full" alt={oneProduct?.model?.title || "Product"} />
+              )}
             </div>
           ) : (
-            <div
-              className={`flex items-center aspect-[3/4] sm:aspect-[2/3] w-full max-w-full lg:max-w-[500px] bg-[#F0F0E5] justify-center rounded-lg`}
-            >
-              <Image
-                src={"/empty-folder.png"}
-                width={60}
-                height={60}
-                alt="No image available"
-              />
+            <div className="flex items-center aspect-[3/4] sm:aspect-[2/3] w-full max-w-full lg:max-w-[500px] bg-[#F0F0E5] justify-center rounded-lg">
+              <Image src={"/empty-folder.png"} width={60} height={60} alt="No image available" />
             </div>
           )}
         </div>
