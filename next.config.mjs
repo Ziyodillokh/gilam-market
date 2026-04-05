@@ -8,6 +8,7 @@ const nextConfig = {
   images: {
     domains: ["grm-upload.getter.uz", "s3.gilam-market.uz", "test.ziyodulloh.uz"],
     formats: ["image/avif", "image/webp"],
+    unoptimized: true,
   },
   experimental: {
     optimizePackageImports: ["antd", "lucide-react", "react-masonry-css", "leaflet", "react-leaflet"],

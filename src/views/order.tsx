@@ -50,13 +50,12 @@ export default function OrderPage() {
       })),
       payment_type: paymentMap[typePay],
       delivery_comment: comment,
-      full_address: location?.address,
-      location_link: `https://yandex.com/maps/?pt=${location.lng},${location.lat}&z=17&l=map`,
+      full_address: location?.address || '',
+      location_link: location ? `https://yandex.com/maps/?pt=${location.lng},${location.lat}&z=17&l=map` : '',
       date: combinedDate,
       user: userMe?.id,
     };
   };
-  console.log(location)
 
   // 🚀 Submit order
   const submitOrder = async () => {
