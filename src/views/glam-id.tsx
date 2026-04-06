@@ -171,8 +171,8 @@ export default function GlamById({ product, productArr, id }) {
             </div>
           ) : (
             <div >
-              <p className="text-[14px] lg:text-[15px] text-[#282A2C] leading-[22px]">
-                {t('paymentDeliveryInfo')}
+              <p className="text-[14px] lg:text-[15px] text-[#282A2C] leading-[22px] whitespace-pre-line">
+                {oneProduct?.collection?.paymentDeliveryInfo || t('paymentDeliveryInfo')}
               </p>
             </div>
           )}
