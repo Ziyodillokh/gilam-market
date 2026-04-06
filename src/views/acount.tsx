@@ -40,7 +40,7 @@ export default function AcountPage() {
     try {
       setLoading(true);
       await fetch(`${process.env.NEXT_PUBLIC_URL}/user/client/`, {
-        method: "Put",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,

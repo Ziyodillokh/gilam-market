@@ -24,6 +24,7 @@ const paymentMap = {
 export default function OrderPage() {
   const { buskets } = useAppSelector((store) => store.buskets);
   const { userMe } = useAppSelector((store) => store.userMe);
+  const { token } = useAppSelector((store) => store.token);
   const [openMadal, setOpenMadal] = useState(false)
   const dispatch = useAppDispatch();
   const [typePay, setTypePay] = useState("cash");
@@ -67,6 +68,7 @@ export default function OrderPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
         },
         body: JSON.stringify(buildOrderBody()),
       });

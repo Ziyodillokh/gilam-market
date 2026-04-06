@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const getInitialUserMe = () => {
   if (typeof window !== "undefined") {
-    const storedUserMe = localStorage.getItem("UserMe");
+    const storedUserMe = localStorage.getItem("userMe");
     return storedUserMe ? JSON.parse(storedUserMe) : null;
   }
   return null;

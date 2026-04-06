@@ -62,10 +62,9 @@ export default function FixedLayout() {
 
   useEffect(() => {
     setIsMounted(true);
-    window.addEventListener("click", () => {
-      setOpenAuth(false);
-      // setOpenFilter(false); // Optional: close filter on outside click if desired, but modal handles its own background click usually
-    });
+    const handleClick = () => setOpenAuth(false);
+    window.addEventListener("click", handleClick);
+    return () => window.removeEventListener("click", handleClick);
   }, []);
   useEffect(() => {
     if (!token) return;
