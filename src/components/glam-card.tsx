@@ -42,15 +42,17 @@ export default function GlamCard({
           ) : image ? (
             <Image
               onClick={() => router.push(url)}
-              height={1000}
-              width={1000}
+              height={500}
+              width={400}
               style={{ width: `${typeObj?.[type]}%` }}
               className={`${isloading ? "hidden" : ""
                 } object-contain m-auto  bg-transparent cursor-pointer ease-in duration-200 hover:-translate-y-1`}
               src={image || null}
               alt={title || "Product Image"}
               title={title}
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              loading="lazy"
+              quality={75}
             />
           ) : (
             <div

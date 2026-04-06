@@ -6,9 +6,13 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   basePath: '/shop',
   images: {
-    domains: ["grm-upload.getter.uz", "s3.gilam-market.uz", "test.ziyodulloh.uz"],
+    remotePatterns: [
+      { protocol: "https", hostname: "grm-upload.getter.uz" },
+      { protocol: "https", hostname: "s3.gilam-market.uz" },
+      { protocol: "https", hostname: "test.ziyodulloh.uz" },
+    ],
     formats: ["image/avif", "image/webp"],
-    unoptimized: true,
+    minimumCacheTTL: 86400,
   },
   experimental: {
     optimizePackageImports: ["antd", "lucide-react", "react-masonry-css", "leaflet", "react-leaflet"],
