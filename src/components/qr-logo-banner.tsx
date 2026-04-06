@@ -27,7 +27,9 @@ export default function QrLogoBanner() {
     <div
       className="relative mx-auto"
       style={{ width: 220, height: 90 }}
-      onClick={qrLogo?.link ? () => window.open(qrLogo.link, "_blank") : undefined}
+      onClick={
+        qrLogo?.link ? () => window.open(qrLogo.link, "_blank") : undefined
+      }
       title={qrLogo?.link || "Gilam Market"}
       role={qrLogo?.link ? "button" : undefined}
     >
@@ -47,10 +49,9 @@ export default function QrLogoBanner() {
             left: "50%",
             top: "50%",
             transform: "translate(-50%, -50%)",
-            width: 88,
-            height: 88,
+            width: 90,
+            height: 90,
             objectFit: "contain",
-            backgroundColor: "#fff",
           }}
         />
       )}
