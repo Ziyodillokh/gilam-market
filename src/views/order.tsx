@@ -190,8 +190,8 @@ export default function OrderPage() {
                         )}
                       </div>
                       <p className="mr-auto text-[12px]">{e}</p>
-                      <Image
-                        src={`/pay${i + 1}.png`}
+                      <img
+                        src={`/shop/pay${i + 1}.png`}
                         width={40}
                         height={25}
                         alt="pay"
