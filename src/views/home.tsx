@@ -12,6 +12,7 @@ import { minio_img_url } from "@/utils/divice";
 import { fetchData } from "../service/get";
 import GlamCardSkeleton from "../components/skeletons/glam-card-skeleton";
 import { useTranslations } from "next-intl";
+import QrLogoBanner from "../components/qr-logo-banner";
 
 export default function HomePage({ product, search }: { product: any, search?: any }) {
   const t = useTranslations('Home');
@@ -91,15 +92,7 @@ export default function HomePage({ product, search }: { product: any, search?: a
     <div className="w-full px-4 sm:px-[30px] mt-[60px] sm:mt-[60px]">
       <header className="mb-[60px] sm:mb-[80px] text-center w-full max-w-[477px] mx-auto px-4 sm:px-[30px]">
         <Link className="w-full inline-block max-w-[220px] mx-auto" href="/">
-          <Image
-            src={"/logo.svg"}
-            width={220}
-            height={90}
-            alt="Gilam Market"
-            title="Gilam Market"
-            priority={true}
-            unoptimized
-          />
+          <QrLogoBanner />
         </Link>
         <h3 className="text-[17px] leading-[20px] text-[#212121] mt-5 mb-[7px] font-semibold">
           Погрузитесь в мир утончённости!
