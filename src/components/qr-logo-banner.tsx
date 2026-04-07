@@ -46,7 +46,7 @@ export default function QrLogoBanner() {
           alt="QR Code"
           className="absolute cursor-pointer"
           style={{
-            left: "51%",
+            left: "50.5%",
             top: "50%",
             transform: "translate(-50%, -50%)",
             width: 90,
